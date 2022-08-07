@@ -27,6 +27,7 @@ namespace VanillaRuleModifierAssembly
 
         public string HowToUse4 = "If set to true, then a random rule seed will be used each bomb.";
 
+        public int MinRandomSeed = 0;
         public int MaxRandomSeed = 10000;
 
         public string HowToUse5 = "Set this value to however high you wish the seed to be.  Use -1 to indicate no limit.";

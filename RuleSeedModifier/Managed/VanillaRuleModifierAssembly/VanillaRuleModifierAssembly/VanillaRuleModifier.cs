@@ -179,9 +179,26 @@ public class VanillaRuleModifier : MonoBehaviour
         {
             _modSettings.ReadSettings();
             var seed = _modSettings.Settings.RuleSeed;
+            int minSeed = _modSettings.Settings.MinRandomSeed;
+            int maxSeed = _modSettings.Settings.MaxRandomSeed
 
             if (_modSettings.Settings.RandomRuleSeed)
-                seed = new System.Random().Next(_modSettings.Settings.MaxRandomSeed < 0 ? int.MaxValue : _modSettings.Settings.MaxRandomSeed);
+                if ( maxSeed < 0 ){
+                    maxSeed = int.MaxValue;
+                }
+
+                if ( minSeed < 0 ){
+                    minSeed = 0;
+                }
+
+                if ( minSeed < maxSeed ){
+                    minSeed = maxSeed;
+                }
+                            
+                seed = new System.Random().Next(
+                    minSeed,
+                    maxSeed
+                );
 
             _currentSeed = seed;
             _currentRandomSeed = _modSettings.Settings.RandomRuleSeed;
@@ -218,7 +235,8 @@ public class VanillaRuleModifier : MonoBehaviour
                     new Dictionary<string, object> { { "Key", "ResetToDefault" }, { "Text", "Reset To Default" }, { "Description", "Changing this setting to true will reset ALL your setting back to default." } },
                     new Dictionary<string, object> { { "Key", "RuleSeed" }, { "Text", "Rule Seed" }, { "Description", "Sets the seed that will be used to generate the ruleset.\n1 = Vanilla." } },
                     new Dictionary<string, object> { { "Key", "RandomRuleSeed" }, { "Text", "Random Rule Seed" }, { "Description", "If enabled, then a random rule seed will be used each bomb." } },
-                    new Dictionary<string, object> { { "Key", "MaxRandomSeed" }, { "Text", "Max Random Seed" }, { "Description", "Set this value to however high you wish the seed to be.\nUse -1 to indicate no limit." } },
+                    new Dictionary<string, object> { { "Key", "MinRandomSeed" }, { "Text", "Min Random Seed" }, { "Description", "Set this value to however high you wish the seed to be." } },
+                    new Dictionary<string, object> { { "Key", "MaxRandomSeed" }, { "Text", "Max Random Seed" }, { "Description", "Set this value to however high you wish the seed to be." } },
                     new Dictionary<string, object>
                     {
                         { "Key", "Language" },
